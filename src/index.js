@@ -8,15 +8,28 @@
  *
  * @returns string[]
  */
-export const getKeysByDescriptor = (object, descriptor) => {};
+export const getKeysByDescriptor = (object, descriptor) => {
+  const resultArr = [];
+  for (let key in Object.getOwnPropertyDescriptors(object)) {
+    let proper = Object.getOwnPropertyDescriptor(object, key);
+    if (proper[descriptor]) {
+      resultArr.push(key);
+    };
+  }
+  return resultArr;
+};
 
 /**
  * Должен вернуть true если объект был заморожен каким-либо методом заморозки freeze, seal, preventExtensions иначе false
  * @param {Object} object
  * @returns {boolean}
  */
-export const isObjectAnyFrozen = (object) => {};
-
+export const isObjectAnyFrozen = (object) => {
+  if (!Object.isExtensible(object) || Object.isSealed(object) || Object.isFrozen(object)) {
+    return true;
+  }
+  return false;
+};
 /**
  * Принимает объект и строку. Мы должны вернуть НОВЫЙ объект(копию оригинального), в котором
  * название свойства (мы передали вторым аргументом), будет поставлено во writable false(только

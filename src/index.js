@@ -40,7 +40,23 @@ export const isObjectAnyFrozen = (object) => {
  *
  * @returns {Object}
  */
-export const assignLockedValues = (object, propertyName) => {};
+export const assignLockedValues = (object, propertyName) => {
+    let newObj = Object.assign({}, object);
+    if(newObj.hasOwnProperty(propertyName)){
+        Object.defineProperty(newObj, propertyName, {
+             writable: false
+        });   
+    }
+    else {
+       Object.defineProperty(newObj, propertyName, {
+            value: null,
+            writable: false,
+            enumerable: true,
+            configurable: true
+        });
+    }
+    return newObj;
+};
 
 /**
  * Принимает объект и возвращает его копию, только абсолютно замороженную

@@ -48,4 +48,8 @@ export const assignLockedValues = (object, propertyName) => {};
  * @param {Object} object
  * @returns {Object}
  */
-export const freezeAllInObject = (object) => {};
+export const freezeAllInObject = (object) => {
+const resultObj = Object.assign({}, object);
+  Object.freeze(resultObj);
+  return resultObj;
+};
